@@ -30,72 +30,31 @@ export default function TransactionForm({ onTransactionAdded }) {
     <form onSubmit={handleSubmit} className="transaction-form">
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {/* Tipo */}
-      <div>
+      <div className='transaction-form__inputs'>
         <label htmlFor="tipo">Tipo</label>
-        <select
-          id="tipo"
-          value={tipo}
-          onChange={e => setTipo(e.target.value)}
-          required
-        >
+        <select id="tipo" value={tipo} onChange={e => setTipo(e.target.value)} required>
           <option value="gasto">Gasto</option>
           <option value="ingreso">Ingreso</option>
         </select>
-      </div>
-
-      {/* Monto */}
-      <div>
+      
         <label htmlFor="monto">Monto</label>
-        <input
-          id="monto"
-          type="number"
-          placeholder="0.00"
-          value={monto}
-          onChange={e => setMonto(e.target.value)}
-          required
-        />
-      </div>
+        <input id="monto" type="number" placeholder="0.00" value={monto} onChange={e => setMonto(e.target.value)}
+          required/>
 
-      {/* Categoría */}
-      <div>
         <label htmlFor="categoria">Categoría</label>
-        <input
-          id="categoria"
-          type="text"
-          placeholder="Supermercado"
-          value={categoria}
-          onChange={e => setCategoria(e.target.value)}
-          required
-        />
-      </div>
+        <input id="categoria" type="text" placeholder="Supermercado" value={categoria}
+          onChange={e => setCategoria(e.target.value)} required/>
+      
 
-      {/* Fecha */}
-      <div>
         <label htmlFor="fecha">Fecha</label>
-        <input
-          id="fecha"
-          type="date"
-          value={fecha}
-          onChange={e => setFecha(e.target.value)}
-          required
-        />
-      </div>
+        <input id="fecha" type="date" value={fecha} onChange={e => setFecha(e.target.value)}
+        required/>
 
-      {/* Descripción */}
-      <div>
-        <label htmlFor="descripcion">Descripción (opcional)</label>
-        <textarea
-          id="descripcion"
-          value={descripcion}
-          onChange={e => setDescripcion(e.target.value)}
-          placeholder="Añade más detalles"
-          rows={2}
-        />
-      </div>
+        <label htmlFor="descripcion">Descripción</label>
+        <textarea id="descripcion" value={descripcion}onChange={e => setDescripcion(e.target.value)} placeholder="Añade más detalles" rows={2}/>
+    </div>
 
-      {/* Botón */}
-      <button type="submit">Agregar Transacción</button>
+      <button className='add-transaction' type="submit">Agregar Transacción</button>
     </form>
   )
 }

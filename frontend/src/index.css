@@ -1,24 +1,27 @@
-
 html,
 body,
 #root {
   height: 100%;
   width: 100%;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  box-sizing: border-box;
+ --purple-dark:   #4527A0;  
+  --purple-primary:#6A0DAD;  
+  --purple-light:  #9575CD; 
+  --purple-accent: #CE93D8;  
+  --purple-bg:     #F3E5F5; 
+  --purple-text:   #311B92;  
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 a {
@@ -26,6 +29,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -46,16 +50,17 @@ h1 {
 
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  margin: 0 4px;
+  padding: 4px 8px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  border: none;
+  border-radius: 4px;
+  display: inline-block;     
+  white-space: nowrap;      
+  overflow: hidden;
+min-width: max-content;
 }
+
 button:hover {
   border-color: #646cff;
 }
@@ -73,8 +78,9 @@ button:focus-visible {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-form div {
-  margin-bottom: 12px;
+.login-container form button {
+  display: block;
+  margin: 16px auto 0; 
 }
 
 label {
@@ -89,24 +95,50 @@ input {
   box-sizing: border-box;
 }
 
-button {
-  width: 30%;
-  padding: 8px;
-  cursor: pointer;
+.auth-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .login-container {
+  width: 90%;
   max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #f7f7f7;
+  background: var(--purple-bg);
+  color: var(--purple-text);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-form div {
+.login-container input {
   margin-bottom: 12px;
+  width: 70%;
+  align-items: center;
 }
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
 
 label {
   display: block;
@@ -121,13 +153,33 @@ input {
 }
 
 .dashboard-container {
-  max-width: 800px;
-  margin: 20px auto;
+  display: flex;
+  gap: 20px;
+  margin: 0;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
+
+.dashboard-left {
+  border-radius: 5px;
+  background-color: var(--purple-bg);
+  color: var(--purple-text);
+  padding: 1rem;
+  flex: 3;  
+
+}
+
+.dashboard-right {
+  width: 100%;   
+  border-radius: 5px;
+  background-color: var(--purple-bg);
+  padding: 2px;
+  color: var(--purple-text);
+  padding: 1rem;
+    flex: 2;  /* ratio 2/5 */
+
+}
+
 
 h2 {
   text-align: center;
@@ -144,9 +196,31 @@ h2 {
   border-bottom: 1px solid #ddd;
 }
 
+.transaction-form__inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;              
+  align-items: center;     
+  margin-bottom: 16px;
+  max-width: 370px;
+}
+
+.transaction-form__inputs label,
+.transaction-form__inputs select,
+.transaction-form__inputs input {
+  width: 100%;            
+  box-sizing: border-box;
+}
+
+.transaction-form__inputs label {
+  white-space: nowrap;     
+}
+
 .transaction-form {
   display: flex;
   flex-direction: column;
+  width: 40%;
+  align-items: stretch;
   gap: 8px;
   margin-bottom: 20px;
 }
@@ -160,19 +234,13 @@ h2 {
 .transaction-form button {
   padding: 10px;
   cursor: pointer;
-  background-color: #007bff;
+  width: 20%;
+  background-color: var(--purple-dark);
   color: white;
   border: none;
   border-radius: 4px;
 }
 
-button {
-  margin: 0 4px;
-  padding: 6px 12px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
 
 button:hover {
   opacity: 0.9;
@@ -188,15 +256,50 @@ button:last-of-type {
   color: white;
 }
 
+ .add-transaction {
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+.app-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;             
+  border-radius: 5px;
+  padding: clamp(8px, 2vw, 24px);
+  margin: 0 1.2rem 20px 1.2rem;
+  background-color: var(--purple-bg);
+  color: var(--purple-text);
+  font-weight: 600;
+  font-size: 1.2em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.page-title {
+  flex: 1 1 auto;           
+  margin: 0;
+  font-size: clamp(1rem, 5vw, 1.75rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;    
+}
+
+.user-name {
+  font-weight: bold;
+  color: #333;
+}
+
 .logout-button {
+  width: auto;
+  padding: 4px 6px;
+  display: block;
+  margin: 1rem 1rem 1rem auto; 
   background-color: #f44336;
   color: white;
-  width: 25%;
-  padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 15px;
 }
 
 .logout-button:hover {
@@ -205,10 +308,49 @@ button:last-of-type {
 
 .balance-container {
   margin: 20px 0;
-  padding: 16px;
-  background-color: #f0f4f8;
+  padding: 0.1rem;
+  background-color: var(--purple-accent);
   border-radius: 8px;
 }
+
+.export-buttons{
+  display: flex;
+  justify-content: center;
+  gap: 12px;         
+  margin: 10px 0;    
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.transaction-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.transaction-list li .transaction-desc {
+  min-width: 0;              
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction-list li button {
+  flex-shrink: 0;             
+}
+
 
 .balance-details {
   display: flex;
@@ -217,6 +359,7 @@ button:last-of-type {
 
 .balance-item {
   font-weight: bold;
+  margin: 1rem;
 }
 
 .ingresos {
@@ -232,28 +375,203 @@ button:last-of-type {
 }
 
 .export-button {
-  padding: 8px 16px;
+  padding: 1px 5px;
   background-color: #198754;
+  max-width: 5%;
   color: white;
   text-decoration: none;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  min-width: max-content;
+
 }
 
 .export-button:hover {
   background-color: #157347;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media (min-width: 1001px) {
+  .dashboard-left {
+    flex: 2;               
+    max-width: 40%;        
   }
-  a:hover {
-    color: #747bff;
+  .dashboard-right {
+    flex: 3;               
+    max-width: 60%;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .transaction-form {
+    width: auto;
+    max-width: 100%;
+    margin: 0;
   }
+
+  .transaction-form__inputs {
+    margin: 1rem auto;
+  }
+
+  .transaction-form button {
+    width: auto;
+    margin: 0;
+    max-width: 200px;     
+    align-self: center;
+  }
+
+   .balance-container {
+    width: auto;        
+    max-width: 100%;    
+    overflow: hidden;   
+    box-sizing: border-box;
+  }
+
+  .balance-details {
+    display: flex;
+    flex-wrap: wrap;    
+    justify-content: space-around;
+    gap: 1rem;          
+  }
+
+  .balance-item {
+    flex: 1 1 120px;   
+    min-width: 0;       
+    text-align: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dashboard-container {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  .dashboard-left,
+  .dashboard-right {
+    width: 100%;
+    margin-bottom: 16px;  }
+
+  .add-transaction {
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .transaction-form {
+    max-width: 400px;    
+    margin: 0 auto 20px; 
+  }
+
+  .transaction-form > * {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .transaction-form__inputs {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .transaction-list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+
+@media (max-width: 480px) {
+  .auth-wrapper,
+  .login-container,
+  .register-container {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+   .transaction-form button {
+    width: auto;           
+    max-width: 200px;      
+    margin: 0 auto 12px;   
+  }
+
+  .login-container form,
+  .register-container form,
+  .transaction-form {
+    width: 100%;
+    margin: 0 auto 16px;
+  }
+
+  .login-container input,
+  .register-container input,
+  .transaction-form__inputs select,
+  .transaction-form__inputs input,
+  .transaction-form button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+
+  .transaction-form__inputs {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+    padding: 8px;
+  }
+  .dashboard-left,
+  .dashboard-right {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .transaction-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .transaction-list li {
+    padding: 8px;
+    gap: 4px;
+    grid-template-columns: minmax(0,1fr) auto auto;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px;
+    gap: 4px;
+  }
+  .page-title {
+    font-size: 1rem;
+    margin-right: 0;
+  }
+  .header-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .logout-button,
+  .export-button,
+  .transaction-form button {
+    padding: 6px 8px;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+   .balance-container {
+    width: 100%;           
+    box-sizing: border-box;
+    padding: 12px;         
+  }
+  .balance-details {
+    flex-direction: column;  
+    align-items: center;     
+    gap: 8px;               
+  }
+
+  .total {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
 }

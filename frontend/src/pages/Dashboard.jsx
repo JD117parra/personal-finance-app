@@ -69,48 +69,32 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* Botón de logout */}
+      <div className="dashboard-left">
+        <h2>Nueva Transacción</h2>
+        <TransactionForm onTransactionAdded={handleTransactionAdded} />
+        <div className="balance-container">
+        <h2>Resumen Financiero</h2>
+          <Balance transactions={transactions} />
+        </div>
+   </div>
 
-      {/* Título principal */}
-      <h1>Dashboard</h1>
 
-      {/* Formulario de nueva transacción */}
-      <h2>Nueva Transacción</h2>
-      <TransactionForm onTransactionAdded={handleTransactionAdded} />
-
-      {/* Resumen del balance */}
-      <h2>Resumen</h2>
-      <div className="balance-container">
-        <Balance transactions={transactions} />
-      </div>
-
-      {/* Gráfico de distribución */}
+     <div className="dashboard-right">
       <h2>Distribución por Categoría</h2>
       <div>
         <Chart transactions={transactions} />
       </div>
-
-      {/* Botones de exportación */}
       {transactions.length > 0 && (
-        <div>
+        <div className="export-buttons">
           <CSVLink
-            data={transactions}
-            filename="transacciones.csv"
-            className="export-button"
-          >
-            Exportar CSV
+            data={transactions} filename="transacciones.csv" className="export-button">
+             CSV
           </CSVLink>
-          <button
-            onClick={exportToPDF}
-            className="export-button"
-          >
-            Exportar PDF
-          </button>
+          <button onClick={exportToPDF} >PDF</button>
         </div>
       )}
 
-      {/* Lista de transacciones */}
-      <ul>
+      <ul className="transaction-list">
         {transactions.map(transaction => (
           <TransactionItem
             key={transaction._id}
@@ -121,5 +105,6 @@ export default function Dashboard() {
         ))}
       </ul>
     </div>
+  </div>
   )
 }

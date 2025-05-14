@@ -1,73 +1,107 @@
-import { useState } from 'react';
-import api from '../api';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react'
+import api from '../api'
+import { useNavigate, Link } from 'react-router-dom'
 
 export default function Register() {
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
-  
-  const navigate = useNavigate();
+  const [nombre, setNombre] = useState('')
+  const [email, setEmail] = useState('')
+  const [contraseña, setContraseña] = useState('')
+  const [confirmar, setConfirmar] = useState('')    // faltaba este
+  const [error, setError] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const navigate = useNavigate()
 
-    try {
-      const { data } = await api.post('/auth/register', { nombre, email, contraseña });
-      
-      localStorage.setItem('token', data.token);
+ const handleSubmit = async (e) => {
+  e.preventDefault()
 
-      // Redirigir al dashboard después del registro
-      navigate('/');
-    } catch (error) {
-      setError(error.response?.data?.msg || 'Error registrando usuario');
-    }
-  };
+  // Validar contraseñas
+  if (contraseña !== confirmar) {
+    setError('Las contraseñas no coinciden')
+    return
+  }
+
+  try {
+    // 1) Registro → recibes { token }
+    const { data } = await api.post('/auth/register', { nombre, email, contraseña })
+    const { token } = data
+    localStorage.setItem('token', token)
+
+    // 2) Header con el token
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+    // 3) Pide el perfil y guarda el nombre
+    const { data: me } = await api.get('/auth/me')
+    localStorage.setItem('userName', me.nombre)
+
+    // 4) Redirige
+    localStorage.setItem('userName', me.nombre)
+
+    navigate('/')
+  } catch (err) {
+    setError(err.response?.data?.msg || 'Error registrando usuario')
+  }
+}
 
   return (
-    <div className="register-container">
-      <h2>Registro de usuario</h2>
-      
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="auth-wrapper">
+      <div className="login-container">
+        <h2>Crear cuenta</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            required
-          />
-        </div>
+        {error && <p className="error-message">{error}</p>}
 
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="nombre">Nombre:</label>
+            <input
+              id="nombre"
+              type="text"
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            required
-          />
-        </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <button type="submit">Registrarse</button>
-      </form>
+          <div>
+            <label htmlFor="password">Contraseña:</label>
+            <input
+              id="password"
+              type="password"
+              value={contraseña}
+              onChange={e => setContraseña(e.target.value)}
+              required
+            />
+          </div>
 
-      <p>
-        ¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link>
-      </p>
+          <div>
+            <label htmlFor="confirm">Confirmar contraseña:</label>
+            <input
+              id="confirm"
+              type="password"
+              value={confirmar}
+              onChange={e => setConfirmar(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit">Registrarme</button>
+        </form>
+
+        <p className="register-link">
+          ¿Ya tienes cuenta?{' '}
+          <Link to="/login">Inicia sesión aquí</Link>
+        </p>
+      </div>
     </div>
-  );
+  )
 }

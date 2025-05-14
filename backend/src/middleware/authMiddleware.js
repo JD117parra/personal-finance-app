@@ -1,23 +1,24 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
-export const verifyToken = (req, res, next) => {
-  // Leer token del header Authorization: Bearer <token>
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ msg: 'No token, autorización denegada' });
-  }
+// Named export
+export function verifyToken(req, res, next) {
+  const authHeader = req.header('Authorization')
+  if (!authHeader) return res.status(401).json({ msg: 'No hay token, acceso denegado' })
 
-  const token = authHeader.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ msg: 'Token mal formateado' });
+  const parts = authHeader.split(' ')
+  if (parts.length !== 2 || parts[0] !== 'Bearer') {
+    return res.status(401).json({ msg: 'Formato de token inválido' })
   }
+  const token = parts[1]
 
   try {
-    // Verificar y extraer payload
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.userId;
-    next();
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.userId = decoded.userId
+    next()
   } catch (err) {
-    return res.status(401).json({ msg: 'Token no válido' });
+    return res.status(401).json({ msg: 'Token inválido' })
   }
-};
+}
+
+// Default export (para quienes usan import authMiddleware from …)
+export default verifyToken

@@ -11,7 +11,6 @@ export default function Balance({ transactions }) {
 
   return (
     <div className="balance-container">
-      <h3>Resumen financiero</h3>
       <div className="balance-details">
         <div className="balance-item ingresos">Ingresos: ${ingresos.toFixed(2)}</div>
         <div className="balance-item gastos">Gastos: ${gastos.toFixed(2)}</div>

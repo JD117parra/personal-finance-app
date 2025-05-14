@@ -2,12 +2,11 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
+import authMiddleware from '../middleware/authMiddleware.js'
+
 
 const router = express.Router();
 
-// @route   POST /api/auth/register
-// @desc    Registrar un nuevo usuario
-// @access  Pública
 router.post('/register', async (req, res) => {
   const { nombre, email, contraseña } = req.body;
   try {
@@ -32,9 +31,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/login
-// @desc    Autenticar usuario y devolver token
-// @access  Pública
+
 router.post('/login', async (req, res) => {
   const { email, contraseña } = req.body;
   try {
@@ -57,5 +54,22 @@ router.post('/login', async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 });
+
+router.get(
+  '/me',
+  authMiddleware,            // valida el JWT y deja req.userId
+  async (req, res) => {
+    try {
+      const user = await User
+        .findById(req.userId)
+        .select('nombre email')
+      if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' })
+      return res.json({ nombre: user.nombre, email: user.email })
+    } catch (err) {
+      console.error(err)
+      return res.status(500).json({ msg: 'Error en el servidor' })
+    }
+  }
+)
 
 export default router;
