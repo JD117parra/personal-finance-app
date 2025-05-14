@@ -1,162 +1,60 @@
-Personal Finance App
-
-A comprehensive personal finance manager: track income and expenses, visualize trends, set budgets, and export your data.
-
-Table of Contents
-
-Features
-
-Demo & Screenshots
-
-Tech Stack
-
-Project Structure
-
-Prerequisites
-
-Installation & Running
-
-Environment Variables
-
-Usage
-
-Testing
-
-Deployment
-
-Contributing
-
-License
-
-Features
-
-🔐 Authentication: Secure JWT-based login and registration
-
-📝 Transaction Management: Create, edit, and delete income and expense entries
-
-📊 Visual Insights: Interactive charts showing spending and income trends
-
-💾 Export Data: Download transactions as CSV or PDF reports
-
-🎯 Budget Control: Category-based budget tracking
-
-🌗 Dark/Light Mode: Respects user’s color scheme preference
-
-📱 Responsive Design: Optimized for mobile, tablet, and desktop
-
-Demo & Screenshots
-
-![Mobile Screenshot](docs/images/mobile.png)
-
-![Login Screen](docs/images/login.png)
+# 💰 Personal Finance App
 
 ![Dashboard Screenshot](docs/images/dashboard.png)
 
-Tech Stack
+![Mobile Screenshot](docs/images/mobile.png)
 
-Layer
 
-Technology
 
-Frontend
+> A full-stack personal finance manager built with React, Node.js, and MongoDB. Track your income and expenses, visualize trends, set budgets, and export your data—all in an elegant, responsive interface.
 
-React, Vite, Axios
+---
 
-Styling
+## 🎯 Project Purpose
 
-CSS
+This project was created to deepen practical FullStack skills by building a complete application from scratch. It covers secure authentication, a robust REST API, and an intuitive frontend UI. AI tools were leveraged to optimize code quality and UX.
 
-Backend
+---
 
-Node.js, Express
+## 🚀 Key Features
 
-Database
+- 📝 **Transaction Management:** Create, edit, and delete income and expense entries
+- 📊 **Interactive Charts:** Visualize spending and income trends over time
+- 💼 **Budget Tracking:** Categorize transactions and monitor budget usage
+- 💾 **Export Options:** Download your data as CSV or PDF reports
+- 🔒 **Authentication:** Secure JWT-based login and registration
+- 🌗 **Dark/Light Mode:** Automatically adapts to your system preference
+- 📱 **Responsive Design:** Optimized for mobile, tablet, and desktop
+- 🔔 **Notifications:** Toast alerts for actions like add, update, delete
 
-MongoDB, Mongoose
+---
 
-Auth
+## 🧰 Technologies Used
 
-JWT, bcrypt.js
+**Frontend**  
+- React (with Hooks & JSX)  
+- Vite for fast bundling  
+- Axios for API requests  
+- React Router for protected routes  
+- React-Toastify for notifications  
+- Tailwind CSS & custom CSS for styling  
 
-CI/CD
+**Backend**  
+- Node.js & Express  
+- MongoDB & Mongoose  
+- JWT & bcrypt.js for authentication  
+- Helmet and CORS for security  
 
-GitHub Actions
+**Dev & CI/CD**  
+- Nodemon & concurrently for local development  
+- GitHub Actions for automated workflows  
 
-Project Structure
+---
 
-personal-finance-app/
-├── backend/          # Node.js & Express API
-├── frontend/         # React application
-├── database/         # Migrations & seeds
-├── docs/             # Documentation & images
-├── scripts/          # Dev utilities
-└── .github/          # GitHub workflows for CI/CD
+## 🧪 Testing
 
-Prerequisites
+Basic unit and integration tests can be added with Jest and Supertest.
 
-Node.js (v16+)
-
-npm or Yarn
-
-MongoDB (local or Atlas)
-
-Installation & Running
-
-Clone the repository:
-
-git clone https://github.com/JD117parra/personal-finance-app.git
-cd personal-finance-app
-
-Install backend dependencies and start server:
-
-cd backend
-npm install
-npm run dev
-
-In a new terminal, install frontend dependencies and start client:
-
-cd frontend
-npm install
-npm run dev
-
-Environment Variables
-
-Backend (backend/.env)
-
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/finanzas
-JWT_SECRET=your_jwt_secret
-
-Frontend (frontend/.env)
-
-VITE_API_URL=http://localhost:5000
-
-Usage
-
-Open your browser at http://localhost:5173 (or the port displayed by Vite).
-
-Register a new account and log in.
-
-Manage your transactions and view financial insights.
-
-Testing
-
-To be implemented: unit and integration tests with Jest or Mocha.
-
-Deployment
-
-Build the production bundle:
-
-cd frontend
-npm run build
-
-Configure your hosting of choice (Heroku, Vercel, Netlify, or your VPS) to serve frontend/dist and connect the backend API.
-
-Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests to improve features, documentation, or tests.
-
-License
-
-This project is licensed under the MIT License. © 2025 JD117parra
-
+To run tests (once configured):
+```bash
+npm test
