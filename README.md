@@ -13,15 +13,6 @@
 
 ![Mobile Screenshot](docs/images/mobile.png)
 
-### Dashboard Overview
-![Dashboard](./screenshots/dashboard.png)
-
-### Transaction Management
-![Transactions](./screenshots/transactions.png)
-
-### Budget Tracking
-![Budget](./screenshots/budget.png)
-
 ## ✨ Features
 
 ### 💼 **Core Functionality**
